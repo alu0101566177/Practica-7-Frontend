@@ -1,0 +1,12 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+
+Astro.response.status = 404;
+---
+
+<BaseLayout>
+  <Breadcrumb items={[{ label: 'Catálogo', href: '/' }, { label: 'No encontrada' }]} />
+  <h1>Especie no encontrada</h1>
+  <p>La especie que buscas no existe.</p>
+</BaseLayout>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SpecieCard from '@/components/SpecieCard.astro';
+import { getSpecies } from '@/data/api';
+import { specieAdapter } from '@/data/specie-adapter';
+
+let species;
+let error = false;
+try {
+  species = (await getSpecies()).map(specieAdapter);
+} catch (e) {
+  console.error(e);
+  error = true;
+}
+---
+
+<BaseLayout>
+  <h1>🌿 Catálogo de Especies Endémicas de Canarias</h1>
+  <p class='subtitle'>Haz clic en una especie para ver el detalle</p>
+  {
+    error || !species ? (
+      <p role='alert'>
+        No se pudo cargar el catálogo. Comprueba que la API está en marcha.
+      </p>
+    ) : (
+      <div class='catalog'>
+        {species.map(specie => (
+          <SpecieCard specie={specie} />
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>
